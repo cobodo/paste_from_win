@@ -7,6 +7,8 @@ Plugin.create(:paste_from_win) do
     icon: Skin[:copy],
     role: :postbox
   ) do |opt|
-    Plugin[:gtk].widgetof(opt.widget).widget_post.buffer.text += `powershell.exe Get-Clipboard -Format Text`.chop
+    text = `powershell.exe Get-Clipboard -Format Text`.chop
+    buffer = Plugin[:gtk].widgetof(opt.widget).widget_post.buffer
+    buffer.insert_at_cursor(text)
   end
 end
